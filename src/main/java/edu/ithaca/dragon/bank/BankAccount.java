@@ -2,9 +2,9 @@ package edu.ithaca.dragon.bank;
 
 public abstract class BankAccount {
 
-    private String id;
-    private double balance;
-    private boolean isFrozen;
+    protected String id;
+    protected double balance;
+    protected boolean isFrozen;
     
 
     /**

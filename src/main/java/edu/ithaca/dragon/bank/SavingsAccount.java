@@ -1,5 +1,6 @@
 package src.main.java.edu.ithaca.dragon.bank;
 
+import edu.ithaca.dragon.bank.BankAccount;
 
 public class SavingsAccount extends BankAccount{
     private double withdrawLimit;
@@ -13,7 +14,9 @@ public class SavingsAccount extends BankAccount{
         this.remainingWithdrawLimit = withdrawLimit;
     }
     protected void applyInterest(){
-        added = this.amount * this.interestRate;
-        this.amount += added;
+        added = this.balance * this.interestRate;
+        //rounds the interest to be added to the hundreths place
+        added = roundToCents(added);
+        this.balance += added;
     }
 }
