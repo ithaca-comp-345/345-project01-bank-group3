@@ -1,21 +1,27 @@
 package edu.ithaca.dragon.bank;
 
-public class BankAccount {
+public abstract class BankAccount {
 
-    private String email;
+    private String id;
     private double balance;
+    boolean isFrozen;
+    
 
     /**
      * @throws IllegalArgumentException if email is invalid
      */
-    public BankAccount(String email, double startingBalance){
+    public BankAccount(String email, double startingBalance, String id){
+        
         if (isEmailValid(email)){
             this.email = email;
             this.balance = startingBalance;
+            this.id = id;
+            this.isFrozen = false;
         }
         else {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
         }
+        
     }
 
     public double getBalance(){
