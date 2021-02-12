@@ -4,7 +4,7 @@ public abstract class BankAccount {
 
     private String id;
     private double balance;
-    boolean isFrozen;
+    private boolean isFrozen;
     
 
     /**
@@ -36,14 +36,58 @@ public abstract class BankAccount {
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
     public void withdraw (double amount) throws InsufficientFundsException{
-        if (amount <= balance){
-            balance -= amount;
+        //Make sure the amount is rounded to cents if 3 decimal places to the right of '.' or more
+        amount = roundToCents(amount);
+        //We can assume balance is rounded already. For savings, after interest must call roundToCents
+        
+        //First, make sure amount is positive number, not negative; amount > 0
+        if (amount > 0){
+        
+            // 0 < amount <= balance and balance >= 0 because can never be < 0
+            if (amount <= balance){
+                balance -= amount;
+            }
+            else {
+                throw new InsufficientFundsException("Not enough money");
+            }
         }
         else {
-            throw new InsufficientFundsException("Not enough money");
+            throw new InsufficientFundsException("Cannot Withdraw Less Than 0");
         }
     }
+    public static double roundToCents(double in){
+        //Takes Number and converts it to string
+        String stringIn = Double.toString(in); 
+        //Takes String and converts it to character array
+        char[] inCharArray = stringIn.toCharArray(); 
 
+        boolean belowOne = false;
+        int counter = 0;
+        for (i=0; 0<i<inCharArray.length-1; i+=1){
+            if(counter >= 3){
+                //Cant round up...
+                inCharArray[i] = '0';
+            }
+            else{
+                //When '.' is hit start counting to hold distance from the '.'
+                if(inCharArray[i]==('.')){
+                    belowOne = true;
+                }
+                //Have if statement instead of else case because this allows for first step once '.' is hit
+                if(belowOne){ 
+                    counter+=1;
+                }
+            }
+           
+            
+        }
+        //Convert char array to String
+        stringIn = String.valueOf(inCharArray);
+        //convert string to double
+        out = Double.parseDouble(stringIn);
+        return out;
+
+    }
 
     public static boolean isEmailValid(String email){
         if (email.indexOf('@') == -1){
