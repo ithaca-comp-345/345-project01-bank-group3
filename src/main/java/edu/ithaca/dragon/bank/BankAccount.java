@@ -2,6 +2,7 @@ package edu.ithaca.dragon.bank;
 
 public abstract class BankAccount {
 
+    protected String email;
     protected String id;
     protected double balance;
     protected boolean isFrozen;
@@ -63,7 +64,7 @@ public abstract class BankAccount {
 
         boolean belowOne = false;
         int counter = 0;
-        for (i=0; 0<i<inCharArray.length-1; i+=1){
+        for (int i=0; i<inCharArray.length-1; i+=1){
             if(counter >= 3){
                 //Cant round up...
                 inCharArray[i] = '0';
@@ -96,5 +97,10 @@ public abstract class BankAccount {
         else {
             return true;
         }
+    }
+
+    public void transfer(Class from, Class to, double amount) throws InsufficientFundsException{
+        from.withdraw(amount);
+        to.deposit(amount);
     }
 }
