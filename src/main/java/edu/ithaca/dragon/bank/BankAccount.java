@@ -11,18 +11,18 @@ public abstract class BankAccount {
     /**
      * @throws IllegalArgumentException if email is invalid
      */
-    public BankAccount(String email, double startingBalance, String id){
-        
+    public BankAccount(String email, double startingBalance){
         if (isEmailValid(email)){
-            this.email = email;
-            this.balance = startingBalance;
-            this.id = id;
-            this.isFrozen = false;
+            if(isAmountValid(startingBalance)){
+                this.email = email;
+                this.balance = startingBalance;
+                isFrozen = false;
+            }
+            else throw new IllegalArgumentException("Starting balance must be positive and have no more than two decimal places");
         }
         else {
             throw new IllegalArgumentException("Email address: " + email + " is invalid, cannot create account");
         }
-        
     }
 
     public double getBalance(){
@@ -34,28 +34,40 @@ public abstract class BankAccount {
     }
 
     /**
+     * @return true if amount is positive (amount > 0) and has two or fewer decimal places, otherwise false
+     */
+    public static boolean isAmountValid(double amount){
+        if(amount <= 0){
+            return false;
+        }
+        
+        // Check to see if there are two or less decimal places.
+        String num = Double.toString(amount);
+        int integers = num.indexOf('.');
+        int decimals = num.length() - integers - 1;
+        if(decimals > 2){
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
-    public void withdraw (double amount) throws InsufficientFundsException{
-        //Make sure the amount is rounded to cents if 3 decimal places to the right of '.' or more
-        amount = roundToCents(amount);
-        //We can assume balance is rounded already. For savings, after interest must call roundToCents
-        
-        //First, make sure amount is positive number, not negative; amount > 0
-        if (amount > 0){
-        
-            // 0 < amount <= balance and balance >= 0 because can never be < 0
-            if (amount <= balance){
-                balance -= amount;
-            }
-            else {
-                throw new InsufficientFundsException("Not enough money");
-            }
+    public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException{
+        if(isAmountValid(amount) == false){
+            throw new IllegalArgumentException("Invalid amount");
+        }
+        else if (amount <= balance){
+            balance -= amount;
         }
         else {
-            throw new InsufficientFundsException("Cannot Withdraw Less Than 0");
+            throw new InsufficientFundsException("Not enough money");
         }
     }
+
+
     public static double roundToCents(double in){
         //Takes Number and converts it to string
         String stringIn = Double.toString(in); 
@@ -85,7 +97,7 @@ public abstract class BankAccount {
         //Convert char array to String
         stringIn = String.valueOf(inCharArray);
         //convert string to double
-        out = Double.parseDouble(stringIn);
+        double out = Double.parseDouble(stringIn);
         return out;
 
     }
