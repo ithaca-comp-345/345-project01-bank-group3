@@ -1,11 +1,12 @@
 package edu.ithaca.dragon.bank;
 
-public abstract class BankAccount {
-
-    protected String email;
-    protected String id;
-    protected double balance;
-    protected boolean isFrozen;
+class BankAccount {
+    
+    private String email;
+    private String id;
+    private double balanceC;
+    private double balanceS;
+    private boolean isFrozen;
     
 
     /**
@@ -15,7 +16,7 @@ public abstract class BankAccount {
         if (isEmailValid(email)){
             if(isAmountValid(startingBalance)){
                 this.email = email;
-                this.balance = startingBalance;
+                this.balanceC = startingBalance;
                 isFrozen = false;
             }
             else throw new IllegalArgumentException("Starting balance must be positive and have no more than two decimal places");
@@ -25,8 +26,12 @@ public abstract class BankAccount {
         }
     }
 
-    public double getBalance(){
-        return balance;
+    public double getBalanceC(){
+        return balanceC;
+    }
+
+    public double getBalanceS(){
+        return balanceS;
     }
 
     public String getEmail(){
@@ -59,8 +64,8 @@ public abstract class BankAccount {
         if(isAmountValid(amount) == false){
             throw new IllegalArgumentException("Invalid amount");
         }
-        else if (amount <= balance){
-            balance -= amount;
+        else if (amount <= balanceC){
+            balanceC -= amount;
         }
         else {
             throw new InsufficientFundsException("Not enough money");
@@ -111,8 +116,27 @@ public abstract class BankAccount {
         }
     }
 
-    public void transfer(Class from, Class to, double amount) throws InsufficientFundsException{
-        from.withdraw(amount);
-        to.deposit(amount);
+    public void transfer(double amount) throws InsufficientFundsException{
+        withdraw(amount);
+        balanceS += amount;
+    }
+
+    
+    /**
+     * Deposits certain amount into the givent account balance
+     */
+    public void deposit(double amount, String depositTo) throws IllegalArgumentException{
+        if (isAmountValid(amount)){
+            if (depositTo.equals("Checking")){
+            balanceC += amount;
+            }
+            else{
+                balanceS += amount;
+            }
+        }
+        else{
+            throw new IllegalArgumentException("Amount: " + amount + " is an invalid amount to deposit.");
+        }
+
     }
 }

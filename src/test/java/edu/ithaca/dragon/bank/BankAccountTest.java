@@ -89,24 +89,25 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
     }
 
+    @Test
     void transferTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200); 
         //base case
         bankAccount.transfer(100);
-        assertEquals(100, bankAccount.getBalance());
-        assertEquals(100, bankAccount.getBalance2());
+        assertEquals(100, bankAccount.getBalanceC());
+        assertEquals(100, bankAccount.getBalanceS());
         //transfer with decimal places
         bankAccount.transfer(1.99);
-        assertEquals(98.01, bankAccount.getBalance());
-        assertEquals(101.99, bankAccount.getBalance2());
+        assertEquals(98.01, bankAccount.getBalanceC());
+        assertEquals(101.99, bankAccount.getBalanceS());
         //transfer with zero value
         bankAccount.transfer(0);
-        assertEquals(98.01, bankAccount.getBalance());
-        assertEquals(101.99, bankAccount.getBalance2());
+        assertEquals(98.01, bankAccount.getBalanceC());
+        assertEquals(101.99, bankAccount.getBalanceS());
         //transfer so balance goes to 0 and balance 2 is starting value
         bankAccount.transfer(98.01);
-        assertEquals(0, bankAccount.getBalance());
-        assertEquals(200, bankAccount.getBalance2());
+        assertEquals(0, bankAccount.getBalanceC());
+        assertEquals(200, bankAccount.getBalanceS());
         //transfer without sufficient amount in balance
         assertThrows(InsufficientFundsException.class, () -> bankAccount.transfer(100));
         //transfer with negatuve value
@@ -115,6 +116,25 @@ class BankAccountTest {
         assertThrows(InsufficientFundsException.class, () -> bankAccount.transfer(100.001));
         //transfer with negative and more than two decimal places
         assertThrows(InsufficientFundsException.class, () -> bankAccount.transfer(-100.001));
+    }
+
+    @Test
+    void depositTest() {
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        //base case
+        bankAccount.deposit(100, "Checking");
+        assertEquals(300, bankAccount.getBalanceC());
+        //deposit with deciaml places
+        bankAccount.deposit(1.99, "Checking");
+        assertEquals(301.99, bankAccount.getBalanceC());
+        //deposit with zero value
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(0, "Checking"));
+        //negative value deposit
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-100, "Checking"));
+        //more than two decimal places deposit
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(100.001, "Checking"));
+        //negative and more than two decimal place deposit
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-100.001, "Checking"));
     }
 
 }
