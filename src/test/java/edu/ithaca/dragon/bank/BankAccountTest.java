@@ -133,6 +133,8 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(100.001, "Checking"));
         //negative and more than two decimal place deposit
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-100.001, "Checking"));
+        //not character 
+        assertThrows(IllegalArguementException.class, ()-> bankAccount.deposit("z", "Checking"));
     }
 
 }
