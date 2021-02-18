@@ -3,7 +3,8 @@ package edu.ithaca.dragon.bank;
 class BankAccount {
     
     private String email;
-    private String id;
+    private static int globalID = 1;
+    private int id;
     private double balanceC;
     private double balanceS;
     private boolean isFrozen;
@@ -18,6 +19,8 @@ class BankAccount {
                 this.email = email;
                 this.balanceC = startingBalance;
                 isFrozen = false;
+                id = globalID;
+                globalID++;
             }
             else throw new IllegalArgumentException("Starting balance must be positive and have no more than two decimal places");
         }
