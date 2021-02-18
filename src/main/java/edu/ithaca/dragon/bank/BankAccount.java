@@ -116,7 +116,7 @@ class BankAccount {
         }
     }
 
-    public void transfer(double amount) throws InsufficientFundsException{
+    public void transfer(double amount) throws InsufficientFundsException, IllegalArgumentException{
         withdraw(amount);
         balanceS += amount;
     }

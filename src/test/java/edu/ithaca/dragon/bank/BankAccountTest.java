@@ -10,7 +10,7 @@ class BankAccountTest {
     void getBalanceTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
-        assertEquals(200, bankAccount.getBalance());
+        assertEquals(200, bankAccount.getBalanceC());
     }
 
     @Test
@@ -20,11 +20,11 @@ class BankAccountTest {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
 
-        assertEquals(100, bankAccount.getBalance());
+        assertEquals(100, bankAccount.getBalanceC());
 
         // Testing negative amount, shouldn't do anything
         bankAccount.withdraw(-100);
-        assertEquals(100, bankAccount.getBalance());
+        assertEquals(100, bankAccount.getBalanceC());
 
         // Testing exception
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
@@ -35,7 +35,7 @@ class BankAccountTest {
 
         // Withdrawing balance down to 0, after throwing exception
         bankAccount.withdraw(100);
-        assertEquals(0, bankAccount.getBalance());
+        assertEquals(0, bankAccount.getBalanceC());
 
         // Amount > balance, should throw exception.
         assertThrows(InsufficientFundsException.class, () ->  bankAccount.withdraw(100));
@@ -84,13 +84,13 @@ class BankAccountTest {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
         assertEquals("a@b.com", bankAccount.getEmail());
-        assertEquals(200, bankAccount.getBalance());
+        assertEquals(200, bankAccount.getBalanceC());
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
     }
 
     @Test
-    void transferTest() {
+    void transferTest() throws InsufficientFundsException, IllegalArgumentException{
         BankAccount bankAccount = new BankAccount("a@b.com", 200); 
         //base case
         bankAccount.transfer(100);
@@ -100,22 +100,20 @@ class BankAccountTest {
         bankAccount.transfer(1.99);
         assertEquals(98.01, bankAccount.getBalanceC());
         assertEquals(101.99, bankAccount.getBalanceS());
-        //transfer with zero value
-        bankAccount.transfer(0);
-        assertEquals(98.01, bankAccount.getBalanceC());
-        assertEquals(101.99, bankAccount.getBalanceS());
         //transfer so balance goes to 0 and balance 2 is starting value
         bankAccount.transfer(98.01);
         assertEquals(0, bankAccount.getBalanceC());
         assertEquals(200, bankAccount.getBalanceS());
+        //transfer with zero value
+        assertThrows(IllegalArgumentException.class, () ->bankAccount.transfer(0));
         //transfer without sufficient amount in balance
         assertThrows(InsufficientFundsException.class, () -> bankAccount.transfer(100));
         //transfer with negatuve value
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.transfer(-100));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.transfer(-100));
         //transfer with more than two decimal places
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.transfer(100.001));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.transfer(100.001));
         //transfer with negative and more than two decimal places
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.transfer(-100.001));
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.transfer(-100.001));
     }
 
     @Test
