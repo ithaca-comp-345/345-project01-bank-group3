@@ -67,6 +67,20 @@ public abstract class BankAccount {
         }
     }
 
+    /**
+     * @param amount amount to be deposited
+     * @throws IllegalArgumentException if amount is negative or has more than 2 decimal places.
+     * @post increases balance by amount
+     */
+    public void deposit(double amount) throws IllegalArgumentException {
+        if(isAmountValid(amount)){
+            balance += amount;
+        }
+        else{
+            throw new IllegalArgumentException("Invalid amount");
+        }
+    }
+
 
     public static double roundToCents(double in){
         //Takes Number and converts it to string
@@ -110,9 +124,10 @@ public abstract class BankAccount {
             return true;
         }
     }
-
+/**
     public void transfer(Class from, Class to, double amount) throws InsufficientFundsException{
         from.withdraw(amount);
         to.deposit(amount);
     }
+    */
 }

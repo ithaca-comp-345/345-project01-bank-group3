@@ -14,6 +14,22 @@ class BankAccountTest {
     }
 
     @Test
+    void depositTest() {
+        BankAccount bankAccount = new BankAccount("a@b.com", 100);
+
+        bankAccount.deposit(100);
+
+        // Normal use test
+        assertEquals(200, bankAccount.getBalance());
+
+        // Exception test
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(-100));
+
+        // The rest of the tests will be redundant if there is a working isAmountValid method.
+
+    }
+
+    @Test
     void withdrawTest() throws InsufficientFundsException{
 
         // Normal use, returns, balance is now 100
@@ -88,7 +104,7 @@ class BankAccountTest {
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
     }
-
+/** 
     void transferTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200); 
         //base case
@@ -116,5 +132,5 @@ class BankAccountTest {
         //transfer with negative and more than two decimal places
         assertThrows(InsufficientFundsException.class, () -> bankAccount.transfer(-100.001));
     }
-
+*/
 }
