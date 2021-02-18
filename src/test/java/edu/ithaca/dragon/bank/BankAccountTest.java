@@ -19,11 +19,6 @@ class BankAccountTest {
         // Normal use, returns, balance is now 100
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
-
-        assertEquals(100, bankAccount.getBalanceC());
-
-        // Testing negative amount, shouldn't do anything
-        bankAccount.withdraw(-100);
         assertEquals(100, bankAccount.getBalanceC());
 
         // Testing exception
@@ -133,8 +128,6 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(100.001, "Checking"));
         //negative and more than two decimal place deposit
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-100.001, "Checking"));
-        //not character 
-        assertThrows(IllegalArguementException.class, ()-> bankAccount.deposit("z", "Checking"));
     }
 
 }

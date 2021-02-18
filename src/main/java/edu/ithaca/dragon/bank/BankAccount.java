@@ -115,7 +115,10 @@ class BankAccount {
             return true;
         }
     }
-
+    
+    /**
+     * transfers a certain amount from one balance to another
+     */
     public void transfer(double amount) throws InsufficientFundsException, IllegalArgumentException{
         withdraw(amount);
         balanceS += amount;
@@ -126,46 +129,16 @@ class BankAccount {
      * Deposits certain amount into the givent account balance
      */
     public void deposit(double amount, String depositTo) throws IllegalArgumentException{
-        boolean good = true;
-        //If amount is 0
-        if(amount == 0){good=false;}
-        //negative
-        if(amount != abs(amount)){good = false;}
-        //if amount has thousandths+ digits
-        if(amount-roundToCents(amount) != 0){good=false;}
-        //Test for characters
-        stringAmount = Double.toString(amount);
-        charsAmount = stringAmount.toCharArray();
-        for(i=0 ; i<charsAmount.length-1; i++){
-            character = true;
-            if(charsAmount[i] == "1"){character = false;}
-            else if(charsAmount[i] == "2"){character = false;}
-            else if(charsAmount[i] == "3"){character = false;}
-            else if(charsAmount[i] == "4"){character = false;}
-            else if(charsAmount[i] == "5"){character = false;}
-            else if(charsAmount[i] == "6"){character = false;}
-            else if(charsAmount[i] == "7"){character = false;}
-            else if(charsAmount[i] == "8"){character = false;}
-            else if(charsAmount[i] == "9"){character = false;}
-            else  if(charsAmount[i] == "."){character = false;}
-            
-            if(character){good=false;}
-        }
-
-        if(good==true){
-            if (isAmountValid(amount)){
-                if (depositTo.equals("Checking")){
-                balanceC += amount;
-                }
-                else{
-                    balanceS += amount;
-                }
+        if (isAmountValid(amount)){
+            if (depositTo.equals("Checking")){
+            balanceC += amount;
             }
             else{
-                throw new IllegalArgumentException("Amount: " + amount + " is an invalid amount to deposit.");
+                balanceS += amount;
             }
         }
-        
-
+        else{
+            throw new IllegalArgumentException("Amount: " + amount + " is an invalid amount to deposit.");
+        }
     }
 }
