@@ -5,14 +5,15 @@
  */
 package edu.ithaca.dragon.bank;
 import java.util.*;
-/**
- *
- * @author thoth
- */
-public class Teller {
+
+public class ATM_Software {
     //Stores ID as Key with all bankaccounts
     //public Map<Integer, ArrayList<BankAccount>> IdConnect = new HashMap<>();
-    
+    public String activeEmail;
+
+    public ATM_Software(){
+        this.activeEmail = "";
+    }
     
     public double getBalance(int id){
         for(i=0; i<CentralBank.bankAccounts.length-1; i++){
@@ -61,5 +62,41 @@ public class Teller {
         }
         System.out.println("Invalid ID");
     }
+
+    public void freezeAccount(String id){
+        for(i = 0; i < CentralBank.bankAccounts.length; i++){
+            if(Centralbank.bankAccounts[i].ID == id){
+                Administrator.freeze(CentralBank.bankAccounts[i]);
+                return();
+            }
+        }
+        System.out.println("Invalid ID");
+    }
+    public void unfreezeAccount(String id){
+        for(i = 0; i < CentralBank.bankAccounts.length; i++){
+            if(Centralbank.bankAccounts[i].ID == id){
+                Administrator.unfreeze(CentralBank.bankAccounts[i]);
+                return();
+            }
+        }
+        System.out.println("Invalid ID");
+    }
     
+    public void verifyCredentials(){
+        Scanner s = new Scanner(System.in)
+        System.out.println("Input Username");
+        uname = String.nextLine();
+        unameValid = Storage.isUser(uname);
+        if(unameValid){
+            System.out.println("Input Password");
+            pwd = String.nextLine();
+            if(pwd.equals(Storage.getPassword(uname))){
+                this.activeEmail = uname;
+                return(true);
+            }
+        }
+        return(false);
+
+        
+    }
 }

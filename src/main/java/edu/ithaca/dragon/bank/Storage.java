@@ -12,7 +12,11 @@ import java.util.*;
  */
 public class Storage {
     private Map<String, String> emailPasswords;
-    private HashMap<String, ArrayList<BankAccount>> emailAccounts;
+    private Map<String, ArrayList<BankAccount>> emailAccounts;
+
+    public boolean isUser(String ID){
+        return(emailPasswords.containsKey(ID));
+    }
     
     protected String getPassword(String ID){
         return(this.emailPasswords.get(ID));
