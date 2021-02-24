@@ -15,70 +15,71 @@ public class ATM_Software {
     }
     
     public double getBalance(int id){
-        for(i=0; i<CentralBank.bankAccounts.length-1; i++){
-            if(Centralbank.bankAccounts[i].ID == id){
-                return(CentralBank.bankAccounts[i].getBalance());
-            }
+        idx = verifyIDInBank(id);
+        if(idx >= 0){
+            return(CentralBank.bankAccounts[idx].getBalance);
         }
+         //if id is invalid, return 0
         System.out.println("Invalid ID");
+        return(0);
     }
     
     public void withdraw(int id, int amt){
-         for(i = 0; i < CentralBank.bankAccounts.length; i++){
-            if(Centralbank.bankAccounts[i].ID == id){
-                return(CentralBank.bankAccounts[i].withdraw(amt));
-            }
+        idx = verifyIDInBank(id);
+        if(idx >= 0){
+            return(CentralBank.bankAccounts[idx].withdraw(amt));
         }
+
         System.out.println("Invalid ID");
     }
     
     public void deposit(int id, int amt){
-         for(i = 0; i < CentralBank.bankAccounts.length; i++){
-            if(Centralbank.bankAccounts[i].ID == id){
-                return(CentralBank.bankAccounts[i].deposit(amt));
-            }
+        idx = verifyIDInBank(id);
+        if(idx >= 0){
+            return(CentralBank.bankAccounts[idx].deposit(amt));
         }
+
         System.out.println("Invalid ID");
     }
     
     public void transfer(int id, int targetId, int amt){
         int targetIndex = -1;
         
-        //Make sure Target Id is Valid
-         for(int i = 0; i < CentralBank.bankAccounts.length; i++){
-            for(int j = 0; j < CentralBank.bankAccounts.length; j++){
-                if(Centralbank.bankAccounts[j].ID == targetId){
-                    targetIndex = j;
-                }
-            }
-            //if both accounts are valid
-            if(Centralbank.bankAccounts[i].ID == id && targetIndex != -1){
-                CentralBank.bankAccounts[i].withdraw(amt);
-                CentralBank.bankAccounts[targetIndex].deposit(amt);
-                return;
-                
-            }
+        idx = verifyIDInBank(id);
+        tidx = verifyIDInBank(targetId);
+        if(idx >= 0 && tidx >= 0){
+            CentralBank.bankAccounts[i].withdraw(amt);
+            CentralBank.bankAccounts[targetIndex].deposit(amt);
         }
+
         System.out.println("Invalid ID");
     }
 
-    public void freezeAccount(String id){
-        for(i = 0; i < CentralBank.bankAccounts.length; i++){
-            if(Centralbank.bankAccounts[i].ID == id){
-                Administrator.freeze(CentralBank.bankAccounts[i]);
-                return();
-            }
+    public void freezeAccount(Integer id){
+        idx = verifyIDInBank(id);
+        if(idx >= 0){
+            Administrator.freeze(CentralBank.bankAccounts[idx]);
+            return();
         }
+               
         System.out.println("Invalid ID");
     }
-    public void unfreezeAccount(String id){
+    public void unfreezeAccount(Integer id){
+        idx = verifyIDInBank(id);
+        if(idx >= 0){
+            Administrator.unfreeze(CentralBank.bankAccounts[idx]);
+            return();
+        }
+               
+        System.out.println("Invalid ID");
+    }
+
+    public Integer verifyIDInBank(Integer id){
         for(i = 0; i < CentralBank.bankAccounts.length; i++){
             if(Centralbank.bankAccounts[i].ID == id){
-                Administrator.unfreeze(CentralBank.bankAccounts[i]);
-                return();
+                return(i);
             }
-        }
-        System.out.println("Invalid ID");
+        return(-1);
     }
     
     public void verifyCredentials(){

@@ -11,6 +11,8 @@ public class UI(){
 
     public void logIn(){
         Scanner reader = new Scanner(System.in);
+
+        //If no active user, log in
         while(this.teller.getActiveUser == null){
             this.teller.verifyCredentials();
         }
@@ -18,7 +20,20 @@ public class UI(){
         while(run){
             //If NOT admin
             if(!teller.activeUser.adminAccess){
-                Integer[] ids = teller.activeUser.getAccountIds();
+                userIface()                
+            }
+            //Else: adminIface which will allow full access to admin & bankteller classes
+
+            System.out.println("Input 0 to close, or any other integer to go back to Account Page");
+            int closePrompt = reader.nextInt();
+            if(closePrompt == 0){
+                run = true;
+            }
+        }
+        return()
+    }
+    public void userIface(){
+        Integer[] ids = teller.activeUser.getAccountIds();
                 //if 1 or more accounts(ids)
                 if(ids != null){
                     //if 1 account, 1 option
@@ -29,7 +44,7 @@ public class UI(){
                     else(){
                         System.out.println("Input Account ID to Select");
                         int IdSel = reader.nextInt();
-                        //check if valid
+                        //check if valid account selection
                         boolean validID = false;
                         for(int i = 0; i<ids.length ; i++){
                             if(idSel == ids[i]){
@@ -38,15 +53,10 @@ public class UI(){
                         }
                     }
                 }
-                
-            }
-            System.out.println("Input 0 to close, or any other integer to go back to Account Page");
-            int closePrompt = reader.nextInt();
-            if(closePrompt == 0){
-                run = true;
-            }
-        }
+        return()
     }
+
+
     public void manageAcct(Integer id){
         System.out.println("Input Menu Option");
         System.out.println("0). Close");
