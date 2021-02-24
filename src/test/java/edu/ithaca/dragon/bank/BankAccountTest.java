@@ -140,7 +140,9 @@ class BankAccountTest {
             z += 9 * (Math.pow(10,n));
             n -= 1;
         }
+        //tests 20 digit below 1 float: 0.999999...
         assertEquals(0, bankAccount.roundToCents(z));
+        //tests long decimals with bigger value: 3000.9999999...
         assertEquals(3000, bankAccount.roundToCents(z+3000));
 
     }
