@@ -130,4 +130,19 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-100.001, "Checking"));
     }
 
+    @Test
+    void roundToCentsTest() {
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        
+        float z = new float();
+        int n = -1;
+        for( i = 0; i < 20; i++){
+            z += 9 * (Math.pow(10,n));
+            n -= 1;
+        }
+        assertEquals(0, bankAccount.roundToCents(z));
+        assertEquals(3000, bankAccount.roundToCents(z+3000));
+
+    }
+
 }
