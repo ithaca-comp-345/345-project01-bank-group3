@@ -7,12 +7,11 @@ package edu.ithaca.dragon.bank;
 import java.util.*;
 
 public class ATM_Software {
-    //Stores ID as Key with all bankaccounts
-    //public Map<Integer, ArrayList<BankAccount>> IdConnect = new HashMap<>();
-    public String activeEmail;
+   
+    public User activeUser;
 
     public ATM_Software(){
-        this.activeEmail = "";
+        this.activeUser = null;
     }
     
     public double getBalance(int id){
@@ -84,19 +83,33 @@ public class ATM_Software {
     
     public void verifyCredentials(){
         Scanner s = new Scanner(System.in)
+
         System.out.println("Input Username");
         uname = String.nextLine();
-        unameValid = Storage.isUser(uname);
-        if(unameValid){
-            System.out.println("Input Password");
-            pwd = String.nextLine();
-            if(pwd.equals(Storage.getPassword(uname))){
-                this.activeEmail = uname;
-                return(true);
+        int unameIndex = -1;
+        User[] users = CentralBank.users;
+        //Go through CentralBank.users and see if email belongs to a user
+        for(i=0; i<users.length; i++){
+            if(users[i].getEmail.equals(uname)){
+                //if the email exists, set unameIndex to its users index
+                unameIndex = i;
             }
         }
-        return(false);
-
-        
+        //if username exists
+        if(unameIndex >= 0){
+            System.out.println("Input Password");
+            pwd = String.nextLine();
+            //if password is valid for user with established email
+            if(users[i].isPassword(pwd)){
+                this.activeEmail = uname;
+                return(true);
+            } //else goes to return false below
+        } //skips here if username doesnt exist
+        return(false);        
     }
+
+    public getActiveUser(){
+        return(this.activeUser);
+    }
+
 }
