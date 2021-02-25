@@ -1,9 +1,8 @@
-package src.main.java.edu.ithaca.dragon.bank;
+package edu.ithaca.dragon.bank;
 
 
 public class CheckingAccount extends BankAccount{
-    public CheckingAccount(String email,String startingBalance){
+    public CheckingAccount(String email, Double startingBalance){
         super(email, startingBalance);
     }
-
 }
