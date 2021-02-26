@@ -11,6 +11,7 @@ public class ATM_Software {
     public User activeUser;
     protected static Map<String, String> emailPasswords;
     protected static Map<String, ArrayList<Integer>> emailAccountIDs;
+    protected static ArrayList<String> emails; //will hold key vals for ^ and ^^
 
     public ATM_Software(){
         this.activeUser = null;
