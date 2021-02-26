@@ -4,29 +4,30 @@ import java.util.ArrayList;
 
 public class CentralBank {
     
-    ArrayList<BankAccount> bankAccounts;
+    public static ArrayList<BankAccount> bankAccounts = new ArrayList<BankAccount>();
+    public static ArrayList<String> allTransactionHistory = new ArrayList<String>();
 
-    public CentralBank(){
-        bankAccounts = new ArrayList<BankAccount>();
+    public static void add(BankAccount account){
+        bankAccounts.add(account);
     }
 
-    public ArrayList<BankAccount> getAccounts(){
+    public static void remove(BankAccount account){
+        bankAccounts.remove(account);
+    }
+
+    public static ArrayList<BankAccount> getAccounts(){
         return bankAccounts;
     }
 
-    public ArrayList<String> getAllTransactionHistory(){
-        ArrayList<String> allTransactionHistory = new ArrayList<String>();
+    public static void addTransaction(String transaction){
+        allTransactionHistory.add(transaction);
+    }
 
-        for(BankAccount account : bankAccounts){
-            for(String transaction : account.getTransactionHistory()){
-                allTransactionHistory.add(transaction);
-            }
-        }
-
+    public static ArrayList<String> getAllTransactionHistory(){
         return allTransactionHistory;
     }
 
-    public double getTotalBalance(){
+    public static double getTotalBalance(){
         double totalBalance = 0;
 
         for(BankAccount account : bankAccounts){

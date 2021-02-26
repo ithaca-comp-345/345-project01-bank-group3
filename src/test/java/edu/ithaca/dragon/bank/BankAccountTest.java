@@ -8,6 +8,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class BankAccountTest {
 
     @Test
+    void idTest(){
+        BankAccount bankAccount1 = new BankAccount("a@b.com", 100);
+        BankAccount bankAccount2 = new BankAccount("b@a.com", 100);
+
+        assertEquals(1, bankAccount1.getId());
+        assertEquals(2, bankAccount2.getId());
+    }
+
+    @Test
     void getBalanceTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
@@ -139,8 +148,8 @@ class BankAccountTest {
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(52));
 
         ArrayList<String> transactionHistory = bankAccount.getTransactionHistory();
-        assertTrue(transactionHistory.get(0).equals("Deposited 100.0 to " + bankAccount.getId() + "."));
-        assertTrue(transactionHistory.get(1).equals("Withdrew 50.0 from " + bankAccount.getId() + "."));
+        assertTrue(transactionHistory.get(0).equals("Deposited 100.0 to account " + bankAccount.getId() + "."));
+        assertTrue(transactionHistory.get(1).equals("Withdrew 50.0 from account " + bankAccount.getId() + "."));
         assertEquals(2, transactionHistory.size());
     }
 
@@ -154,15 +163,6 @@ class BankAccountTest {
         assertTrue(bankAccount.isFrozen());
         bankAccount.unfreeze();
         assertFalse(bankAccount.isFrozen());
-    }
-
-    @Test
-    void idTest(){
-        BankAccount bankAccount1 = new BankAccount("a@b.com", 100);
-        BankAccount bankAccount2 = new BankAccount("b@a.com", 100);
-
-        assertEquals(1, bankAccount1.getId());
-        assertEquals(2, bankAccount2.getId());
     }
 
 }

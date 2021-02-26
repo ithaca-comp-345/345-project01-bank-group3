@@ -27,6 +27,7 @@ public class SavingsAccount extends BankAccount{
         else if (amount <= balance && remainingWithdrawLimit - amount >= 0){
             remainingWithdrawLimit -= amount;
             balance -= amount;
+            CentralBank.addTransaction("Withdrew " + amount + " from account " + id + ".");
         }
         else {
             throw new InsufficientFundsException("Not enough money");
