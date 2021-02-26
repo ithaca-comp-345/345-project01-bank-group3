@@ -32,7 +32,6 @@ public class SavingsAccount extends BankAccount{
             throw new InsufficientFundsException("Not enough money");
         }
     }
-    }
 
     protected void resetWithdrawLimit(){
         remainingWithdrawLimit = withdrawLimit;
