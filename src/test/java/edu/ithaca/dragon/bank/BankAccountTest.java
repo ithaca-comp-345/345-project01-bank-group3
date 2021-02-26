@@ -1,6 +1,7 @@
 package edu.ithaca.dragon.bank;
 
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -126,6 +127,42 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(100.001));
         //negative and more than two decimal place deposit
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-100.001));
+    }
+
+    @Test
+    void getTransactionHistoryTest(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 1);
+
+        bankAccount.deposit(100);
+        try{        bankAccount.withdraw(50); }
+        catch(Exception e){}
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(52));
+
+        ArrayList<String> transactionHistory = bankAccount.getTransactionHistory();
+        assertTrue(transactionHistory.get(0).equals("Deposited 100.0 to " + bankAccount.getId() + "."));
+        assertTrue(transactionHistory.get(1).equals("Withdrew 50.0 from " + bankAccount.getId() + "."));
+        assertEquals(2, transactionHistory.size());
+    }
+
+    @Test
+    void freezeTest(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 500);
+        assertFalse(bankAccount.isFrozen());
+        bankAccount.freeze();
+        assertTrue(bankAccount.isFrozen());
+        bankAccount.freeze();
+        assertTrue(bankAccount.isFrozen());
+        bankAccount.unfreeze();
+        assertFalse(bankAccount.isFrozen());
+    }
+
+    @Test
+    void idTest(){
+        BankAccount bankAccount1 = new BankAccount("a@b.com", 100);
+        BankAccount bankAccount2 = new BankAccount("b@a.com", 100);
+
+        assertEquals(1, bankAccount1.getId());
+        assertEquals(2, bankAccount2.getId());
     }
 
 }

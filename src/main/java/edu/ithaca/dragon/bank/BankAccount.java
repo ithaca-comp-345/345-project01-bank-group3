@@ -1,5 +1,7 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.ArrayList;
+
 class BankAccount {
     
     protected String email;
@@ -7,6 +9,7 @@ class BankAccount {
     protected int id;
     protected double balance;
     protected boolean isFrozen;
+    protected ArrayList<String> transactionHistory;
     
 
     /**
@@ -20,6 +23,7 @@ class BankAccount {
                 isFrozen = false;
                 id = globalID;
                 globalID++;
+                transactionHistory = new ArrayList<String>();
             }
             else throw new IllegalArgumentException("Starting balance must be positive and have no more than two decimal places");
         }
@@ -39,6 +43,10 @@ class BankAccount {
 
     public int getId(){
         return id;
+    }
+
+    public ArrayList<String> getTransactionHistory(){
+        return transactionHistory;
     }
 
     /**
@@ -69,6 +77,7 @@ class BankAccount {
         }
         else if (amount <= balance){
             balance -= amount;
+            transactionHistory.add("Withdrew " + amount + " from " + id + ".");
         }
         else {
             throw new InsufficientFundsException("Not enough money");
@@ -99,9 +108,26 @@ class BankAccount {
     public void deposit(double amount) throws IllegalArgumentException{
         if (isAmountValid(amount)){
             balance += amount;
+            transactionHistory.add("Deposited " + amount + " to " + id + ".");
         }
         else{
             throw new IllegalArgumentException("Amount: " + amount + " is an invalid amount to deposit.");
+        }
+    }
+
+    public boolean isFrozen(){
+        return isFrozen;
+    }
+
+    public void freeze(){
+        if(!this.isFrozen()){
+            this.isFrozen = true;
+        }
+    }
+
+    public void unfreeze(){
+        if(this.isFrozen()){
+            this.isFrozen = false;
         }
     }
 }

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CentralBankTest {
 
     @Test
-    void getAllBalancesTest(){
+    void getTotalBalanceTest(){
         CentralBank centralBank = new CentralBank();
 
         
