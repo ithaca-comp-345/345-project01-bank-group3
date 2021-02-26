@@ -8,7 +8,6 @@ import java.util.*;
 
 public class ATM_Software {
    
-    
     protected static Map<String, String> emailPasswords;
     protected static Map<String, ArrayList<Integer>> emailAccountIDs;
     protected static ArrayList<String> emails; //will hold key vals for ^ and ^^
