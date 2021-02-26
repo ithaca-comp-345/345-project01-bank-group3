@@ -1,13 +1,15 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.ArrayList;
+
 class BankAccount {
     
-    private String email;
-    private static int globalID = 1;
-    private int id;
-    private double balanceC;
-    private double balanceS;
-    private boolean isFrozen;
+    protected String email;
+    protected static int globalID = 1;
+    protected int id;
+    protected double balance;
+    protected boolean isFrozen;
+    protected ArrayList<String> transactionHistory;
     
 
     /**
@@ -17,10 +19,12 @@ class BankAccount {
         if (isEmailValid(email)){
             if(isAmountValid(startingBalance)){
                 this.email = email;
-                this.balanceC = startingBalance;
+                this.balance = startingBalance;
                 isFrozen = false;
                 id = globalID;
                 globalID++;
+                transactionHistory = new ArrayList<String>();
+                CentralBank.add(this);
             }
             else throw new IllegalArgumentException("Starting balance must be positive and have no more than two decimal places");
         }
@@ -29,16 +33,21 @@ class BankAccount {
         }
     }
 
-    public double getBalanceC(){
-        return balanceC;
+    public double getBalance(){
+        return balance;
     }
 
-    public double getBalanceS(){
-        return balanceS;
-    }
 
     public String getEmail(){
         return email;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public ArrayList<String> getTransactionHistory(){
+        return transactionHistory;
     }
 
     /**
@@ -67,47 +76,14 @@ class BankAccount {
         if(isAmountValid(amount) == false){
             throw new IllegalArgumentException("Invalid amount");
         }
-        else if (amount <= balanceC){
-            balanceC -= amount;
+        else if (amount <= balance){
+            balance -= amount;
+            transactionHistory.add("Withdrew " + amount + " from account " + id + ".");
+            CentralBank.addTransaction("Withdrew " + amount + " from account " + id + ".");
         }
         else {
             throw new InsufficientFundsException("Not enough money");
         }
-    }
-
-
-    public static double roundToCents(double in){
-        //Takes Number and converts it to string
-        String stringIn = Double.toString(in); 
-        //Takes String and converts it to character array
-        char[] inCharArray = stringIn.toCharArray(); 
-
-        boolean belowOne = false;
-        int counter = 0;
-        for (int i=0; i<inCharArray.length-1; i+=1){
-            if(counter >= 3){
-                //Cant round up...
-                inCharArray[i] = '0';
-            }
-            else{
-                //When '.' is hit start counting to hold distance from the '.'
-                if(inCharArray[i]==('.')){
-                    belowOne = true;
-                }
-                //Have if statement instead of else case because this allows for first step once '.' is hit
-                if(belowOne){ 
-                    counter+=1;
-                }
-            }
-           
-            
-        }
-        //Convert char array to String
-        stringIn = String.valueOf(inCharArray);
-        //convert string to double
-        double out = Double.parseDouble(stringIn);
-        return out;
-
     }
 
     public static boolean isEmailValid(String email){
@@ -122,26 +98,39 @@ class BankAccount {
     /**
      * transfers a certain amount from one balance to another
      */
-    public void transfer(double amount) throws InsufficientFundsException, IllegalArgumentException{
+    public void transfer(double amount, BankAccount transferTo) throws InsufficientFundsException, IllegalArgumentException{
         withdraw(amount);
-        balanceS += amount;
+        transferTo.deposit(amount);
     }
 
     
     /**
      * Deposits certain amount into the givent account balance
      */
-    public void deposit(double amount, String depositTo) throws IllegalArgumentException{
+    public void deposit(double amount) throws IllegalArgumentException{
         if (isAmountValid(amount)){
-            if (depositTo.equals("Checking")){
-            balanceC += amount;
-            }
-            else{
-                balanceS += amount;
-            }
+            balance += amount;
+            transactionHistory.add("Deposited " + amount + " to account " + id + ".");
+            CentralBank.addTransaction("Deposited " + amount + " to account " + id + ".");
         }
         else{
             throw new IllegalArgumentException("Amount: " + amount + " is an invalid amount to deposit.");
+        }
+    }
+
+    public boolean isFrozen(){
+        return isFrozen;
+    }
+
+    public void freeze(){
+        if(!this.isFrozen()){
+            this.isFrozen = true;
+        }
+    }
+
+    public void unfreeze(){
+        if(this.isFrozen()){
+            this.isFrozen = false;
         }
     }
 }
