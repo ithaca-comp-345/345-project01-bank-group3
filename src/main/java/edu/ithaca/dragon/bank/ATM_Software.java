@@ -9,9 +9,12 @@ import java.util.*;
 public class ATM_Software {
    
     public User activeUser;
+    protected static Map<String, String> emailPasswords;
+    protected static Map<String, ArrayList<Integer>> emailAccountIDs;
 
     public ATM_Software(){
         this.activeUser = null;
+        
     }
     
     public double getBalance(int id){
