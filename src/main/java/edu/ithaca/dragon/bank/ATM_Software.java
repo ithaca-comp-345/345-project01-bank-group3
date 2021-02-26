@@ -21,7 +21,7 @@ public class ATM_Software {
     public double getBalance(int id){
         int idx = verifyIDInBank(id);
         if(idx >= 0){
-            return(CentralBank.bankAccounts[idx].getBalance);
+            return(CentralBank.bankAccounts[idx].getBalance());
         }
          //if id is invalid, return 0
         System.out.println("Invalid ID");
