@@ -19,5 +19,24 @@ public class SavingsAccount extends BankAccount{
         balance += added;
     }
 
+    @Override
+    public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException{
+        if(isAmountValid(amount) == false){
+            throw new IllegalArgumentException("Invalid amount");
+        }
+        else if (amount <= balance && remainingWithdrawLimit - amount >= 0){
+            remainingWithdrawLimit -= amount;
+            balance -= amount;
+            CentralBank.addTransaction("Withdrew " + amount + " from account " + id + ".");
+        }
+        else {
+            throw new InsufficientFundsException("Not enough money");
+        }
+    }
+
+    protected void resetWithdrawLimit(){
+        remainingWithdrawLimit = withdrawLimit;
+    }
+
     
 }
