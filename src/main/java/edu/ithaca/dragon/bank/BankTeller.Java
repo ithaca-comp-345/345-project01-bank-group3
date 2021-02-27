@@ -6,17 +6,6 @@ public class BankTeller extends ATM_Software(){
         super();
     }
 
-    public void createBankAccount(balance){
-        //initialize new account
-        BankAccount newacct = new BankAccount(balance);
-        //get local ArrayList value for key
-        ArrayList<Integer> myIds = this.emailAccountIDs.get(this.activeUser);
-        myIds.add(newacct.ID);
-        //replace old value with updated ArrayList
-        this.emailAccountIDs.put(this.activeUser, myIds);
-        //Add newacct to CentralBanks Bank Account ArrayList
-        CentralBank.add(newacct);
-    }
     public void createBankAccount(email, balance){
         //initialize new account
         BankAccount newacct = new BankAccount(balance);
