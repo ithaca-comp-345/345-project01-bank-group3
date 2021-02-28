@@ -8,7 +8,6 @@ import java.util.*;
 
 public class ATM_Software {
    
-    
     protected static Map<String, String> emailPasswords;
     protected static Map<String, ArrayList<Integer>> emailAccountIDs;
     protected static ArrayList<String> emails; //will hold key vals for ^ and ^^
@@ -21,7 +20,7 @@ public class ATM_Software {
     public double getBalance(int id){
         int idx = verifyIDInBank(id);
         if(idx >= 0){
-            return(CentralBank.bankAccounts[idx].getBalance);
+            return(CentralBank.bankAccounts[idx].getBalance());
         }
          //if id is invalid, return 0
         System.out.println("Invalid ID");
