@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.ithaca.dragon.bank;
 import java.util.*;
 
@@ -14,7 +10,8 @@ public class ATM_Software {
     protected static ArrayList<String> emailsWithAdmin;
 
     public ATM_Software(){
-       
+       this.emails = null;
+
     }
     
     public double getBalance(int id){
@@ -58,7 +55,7 @@ public class ATM_Software {
         System.out.println("Invalid ID");
     }
 
-    public void freezeAccount(Integer id){
+    public void freezeAccount(int id){
         int idx = verifyIDInBank(id);
         if(idx >= 0){
             Administrator.freeze(CentralBank.bankAccounts[idx]);
@@ -67,8 +64,8 @@ public class ATM_Software {
                
         System.out.println("Invalid ID");
     }
-    public void unfreezeAccount(Integer id){
-        Integer idx = verifyIDInBank(id);
+    public void unfreezeAccount(int id){
+        int idx = verifyIDInBank(id);
         if(idx >= 0){
             Administrator.unfreeze(CentralBank.bankAccounts[idx]);
             return();
@@ -77,8 +74,8 @@ public class ATM_Software {
         System.out.println("Invalid ID");
     }
 
-    public Integer verifyIDInBank(Integer id){
-        for(i = 0; i < CentralBank.bankAccounts.size(); i++){
+    public int verifyIDInBank(int id){
+        for(int i = 0; i < CentralBank.bankAccounts.size(); i++){
             if(Centralbank.bankAccounts[i].ID == id){
                 return(i);
             }
@@ -86,13 +83,13 @@ public class ATM_Software {
     }
     
     public String verifyCredentials(){
-        Scanner s = new Scanner(System.in)
+        Scanner s = new Scanner(System.in);
 
         System.out.println("Input Username");
         String emailIn = s.nextLine();
         int emailIndex = -1;
         //Go through users and see if email belongs to a user
-        for(i=0; i<this.emails.size(); i++){
+        for(int i=0; i < this.emails.size(); i++){
             if(this.emails[i].equals(emailIn)){
                 //if the email exists, set emailIndex to its users index
                 emailIndex = i;
