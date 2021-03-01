@@ -3,7 +3,7 @@
 
 Link to all the diagrams: https://app.diagrams.net/#G143swHzrqFoADjtB0pLmXJc-y596yZqK9
 
-Link to User Test Script: 
+Link to User Test Script: https://docs.google.com/document/d/1KTZe-w1vx_KTUe1EwMjihCZqXlh_qA5z5G1oiqyQqX4/edit?usp=sharing
 
 Break Down: https://docs.google.com/document/d/1Y7Fx6bmpRqHyyGhbqPeWTxgvaVTPLfdQhsXGbOfj-po/edit?usp=sharing
 
