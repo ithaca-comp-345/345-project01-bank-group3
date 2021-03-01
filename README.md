@@ -5,9 +5,9 @@ Link to all the diagrams: https://app.diagrams.net/#G143swHzrqFoADjtB0pLmXJc-y59
 
 Link to User Test Script: 
 
-Break Down:
+Break Down: https://docs.google.com/document/d/1Y7Fx6bmpRqHyyGhbqPeWTxgvaVTPLfdQhsXGbOfj-po/edit?usp=sharing
 
-Danny - BankAccount, BankAccountTest, SavingsAccount, Admin, AdminTest
+Danny - BankAccount, BankAccountTest, SavingsAccount, CheckingAccount, Admin, AdminTest
 
 Pax - ATM_Software, BankTeller, UI, BankTellerTest, ATM_SoftwareTest
 
