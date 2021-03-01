@@ -8,3 +8,4 @@ Link to User Test Script:
 Break Down:
 
 Danny - BankAccount, BankAccountTest, SavingsAccount, Admin, AdminTest
+Pax - ATM_Software, BankTeller, UI, BankTellerTest, ATM_SoftwareTest
